@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PyWebGUI 应用</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #2575fc, #6a11cb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin: 0.75rem 0 0.5rem;
+            color: #2c3e50;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            margin: 0;
+            color: #7f8c8d;
+        }
+
+        button {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: white;
+            border: none;
+            padding: 0.85rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 4px 12px rgba(37, 117, 252, 0.3);
+        }
+
+        button:hover {
+            opacity: 0.92;
+            transform: scale(1.03);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        footer {
+            margin-top: 2rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="logo">PY</div>
+    <h1>欢迎使用 PyWebGUI</h1>
+    <p>这是一个基于 Python 与本地 WebView 构建的现代化桌面应用界面。无需网络，安全高效。</p>
+
+    <div class="card-grid">
+        <div class="card">
+            <div style="font-size: 2rem;">⚡</div>
+            <h3>快速启动</h3>
+            <p>秒级加载，本地运行，无网络依赖。</p>
+        </div>
+        <div class="card">
+            <div style="font-size: 2rem;">🔒</div>
+            <h3>数据安全</h3>
+            <p>所有数据保留在您的设备上。</p>
+        </div>
+        <div class="card">
+            <div style="font-size: 2rem;">🎨</div>
+            <h3>美观界面</h3>
+            <p>现代设计，流畅交互体验。</p>
+        </div>
+    </div>
+
+    <button id="startBtn">开始使用</button>
+
+    <footer>
+        © 2026 PyWebGUI 应用 · 本地运行
+    </footer>
+</div>
+
+<script>
+    document.getElementById('startBtn').addEventListener('click', () => {
+        // 这里可调用 pywebgui 提供的 JS 接口，例如：
+        // window.pywebgui?.call('on_start_clicked');
+
+        alert('✅ 操作已触发！\n（实际项目中将调用 Python 函数）');
+    });
+</script>
+</body>
+</html>

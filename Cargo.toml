@@ -1,0 +1,31 @@
+[package]
+name = "pywebgui"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "pywebgui"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+doc = false
+proc-macro = false
+harness = false
+plugin = false
+bench = false
+doctest = false
+
+[dependencies]
+pyo3 = { version = "*", features = ["extension-module"] }
+tao = "*"
+wry = { version = "*", features = ["protocol"] }
+image = "*"
+
+[features]
+default = ["pyo3_backend"]
+pyo3_backend = ["pyo3/extension-module"]
+
+[dev-dependencies]
+pyo3 = { version = "*", features = ["auto-initialize"] }
+
+[env]
+PYO3_USE_ABI3_FORWARD_COMPATIBILITY = "1"
