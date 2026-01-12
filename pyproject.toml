@@ -4,14 +4,13 @@ build-backend = "maturin"
 
 [project]
 name = "pywebgui"
-version = "0.1.0"
+version = "1.0.0"
 description = "A Python library for creating desktop applications with web technologies"
 authors = [
     {name = "xzp", email = "x-z-p@foxmail.com"}
 ]
-# readme = "README.md"  # 注释掉这行，因为我们没有 README.md
 license = {text = "MIT"}
-requires-python = ">=3.7"
+requires-python = ">=3.11"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -33,13 +32,11 @@ Repository = "https://github.com/yourusername/pywebgui"
 features = ["pyo3/extension-module"]
 module-name = "pywebgui._pywebgui"
 
-# 包含静态资源文件
 include = [
     "pywebgui/statics/default_html.html",
     "pywebgui/statics/default_icon.png",
 ]
 
-# 排除已生成的扩展模块，避免重复添加
 exclude = [
     "pywebgui/_pywebgui.*.pyd",
     "pywebgui/_pywebgui.*.so",
