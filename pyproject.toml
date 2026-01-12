@@ -3,7 +3,7 @@ requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "pywebviewgui"
+name = "pyviewgui"
 version = "1.0.0"
 description = "A Python library for creating desktop applications with web technologies"
 authors = [
@@ -11,35 +11,25 @@ authors = [
 ]
 license = {text = "MIT"}
 requires-python = ">=3.11"
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-]
+
 keywords = ["gui", "webview", "desktop", "ui", "frontend"]
 
 [project.urls]
-Homepage = "https://github.com/xzp-hub/pywebgui.git"
-Repository = "https://github.com/xzp-hub/pywebgui.git"
+Homepage = "https://github.com/xzp-hub/pyviewgui.git"
+Repository = "https://github.com/xzp-hub/pyviewgui.git"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
-module-name = "pywebgui._pywebgui"
+module-name = "pyviewgui._pyviewgui"
 
 include = [
-    "pywebgui/statics/default_html.html",
-    "pywebgui/statics/default_icon.png",
+    "pyviewgui/statics/default_html.html",
+    "pyviewgui/statics/default_icon.png",
 ]
 
 exclude = [
-    "pywebgui/_pywebgui.*.pyd",
-    "pywebgui/_pywebgui.*.so",
-    "pywebgui/_pywebgui.*.dylib",
+    "pyviewgui/_pyviewgui.*.pyd",
+    "pyviewgui/_pyviewgui.*.so",
+    "pyviewgui/_pyviewgui.*.dylib",
 ]
 

@@ -1,4 +1,4 @@
-from ._pywebgui import py_create_window
+from ._pyviewgui import py_create_window
 from os.path import dirname, join
 
 __version__ = "0.1.0"
@@ -9,7 +9,7 @@ __all__ = ['create_window']
 
 
 def create_window(
-        win_title: str = "pywebgui app",
+        win_title: str = "pyviewgui app",
         win_width: int = 1200,
         win_height: int = 800,
         win_content: str = None,

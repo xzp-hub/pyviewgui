@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>PyWebGUI 应用</title>
+    <title>PyViewGUI 应用</title>
     <style>
         * {
             margin: 0;
@@ -124,7 +124,7 @@
 <body>
 <div class="container">
     <div class="logo">PY</div>
-    <h1>欢迎使用 PyWebGUI</h1>
+    <h1>欢迎使用 PyViewGUI</h1>
     <p>这是一个基于 Python 与本地 WebView 构建的现代化桌面应用界面。无需网络，安全高效。</p>
 
     <div class="card-grid">
@@ -148,14 +148,14 @@
     <button id="startBtn">开始使用</button>
 
     <footer>
-        © 2026 PyWebGUI 应用 · 本地运行
+        © 2026 PyViewGUI 应用 · 本地运行
     </footer>
 </div>
 
 <script>
     document.getElementById('startBtn').addEventListener('click', () => {
-        // 这里可调用 pywebgui 提供的 JS 接口，例如：
-        // window.pywebgui?.call('on_start_clicked');
+        // 这里可调用 pyviewgui 提供的 JS 接口，例如：
+        // window.pyviewgui?.call('on_start_clicked');
 
         alert('✅ 操作已触发！\n（实际项目中将调用 Python 函数）');
     });

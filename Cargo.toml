@@ -1,10 +1,10 @@
 [package]
-name = "pywebgui"
+name = "pyviewgui"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "pywebgui"
+name = "pyviewgui"
 path = "src/lib.rs"
 crate-type = ["cdylib"]
 doc = false

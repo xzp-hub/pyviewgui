@@ -2201,7 +2201,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pywebgui"
+name = "pyviewgui"
 version = "0.1.0"
 dependencies = [
  "image",

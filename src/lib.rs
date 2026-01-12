@@ -34,8 +34,10 @@ pub fn py_create_window(
     );
 }
 
+
 #[pymodule]
-fn _pywebgui(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+#[pyo3(gil_used=false)]
+fn _pyviewgui(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(py_create_window, m)?)?;
     Ok(())
 }

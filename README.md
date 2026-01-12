@@ -1,6 +1,6 @@
-# pywebgui
+# pyviewgui
 
-pywebgui 是一个使用 Rust 编写的 Python 库，用于创建基于 Web 技术的桌面应用程序。它利用 Rust 的高性能和安全性，结合 Web 技术的灵活性，为开发者提供一个简单易用的桌面 GUI 开发方案。
+pyviewgui 是一个使用 Rust 编写的 Python 库，用于创建基于 Web 技术的桌面应用程序。它利用 Rust 的高性能和安全性，结合 Web 技术的灵活性，为开发者提供一个简单易用的桌面 GUI 开发方案。
 
 ## 功能特性
 
@@ -14,7 +14,7 @@ pywebgui 是一个使用 Rust 编写的 Python 库，用于创建基于 Web 技�
 ## 安装
 
 ```bash
-pip install pywebgui
+pip install pyviewgui
 ```
 
 ## 使用方法
@@ -22,19 +22,19 @@ pip install pywebgui
 ### 基本用法
 
 ```python
-import pywebgui
+import pyviewgui
 
 # 创建一个简单的窗口，默认加载内置的 HTML
-pywebgui.create_window()
+pyviewgui.create_window()
 ```
 
 ### 自定义窗口
 
 ```python
-import pywebgui
+import pyviewgui
 
 # 创建自定义窗口
-pywebgui.create_window(
+pyviewgui.create_window(
     win_title="我的应用",
     win_width=1200,
     win_height=800,
@@ -47,10 +47,10 @@ pywebgui.create_window(
 ### 加载自定义内容
 
 ```python
-import pywebgui
+import pyviewgui
 
 # 加载自定义 HTML 文件
-pywebgui.create_window(
+pyviewgui.create_window(
     win_title="自定义应用",
     win_width=1000,
     win_height=700,
@@ -67,7 +67,7 @@ pywebgui.create_window(
 
 #### 参数
 
-- `win_title` (str): 窗口标题，默认为 "pywebgui app"
+- `win_title` (str): 窗口标题，默认为 "pyviewgui app"
 - `win_width` (int): 窗口宽度，默认为 1200 像素
 - `win_height` (int): 窗口高度，默认为 800 像素
 - `win_content` (str): 窗口内容，可以是本地 HTML 文件路径或 URL，默认使用内置 HTML
