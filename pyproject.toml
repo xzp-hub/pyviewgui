@@ -25,8 +25,8 @@ classifiers = [
 keywords = ["gui", "webview", "desktop", "ui", "frontend"]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/pywebgui"
-Repository = "https://github.com/yourusername/pywebgui"
+Homepage = "https://github.com/xzp-hub/pywebgui.git"
+Repository = "https://github.com/xzp-hub/pywebgui.git"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
