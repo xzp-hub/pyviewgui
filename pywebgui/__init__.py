@@ -14,9 +14,9 @@ def create_window(
         win_height: int = 800,
         win_content: str = None,
         win_icon_path: str = None,
-        win_decorations: bool = True,
-        win_resizable: bool = True,
-        win_devtools: bool = True
+        win_is_decorations: bool = True,
+        win_is_resizable: bool = True,
+        win_is_devtools: bool = True
 ):
     if not win_content:
         win_content = join(dirname(__file__), 'statics', 'default_html.html')
@@ -30,7 +30,7 @@ def create_window(
         win_height,
         win_content,
         win_icon_path,
-        win_decorations,
-        win_resizable,
-        win_devtools
+        win_is_decorations,
+        win_is_resizable,
+        win_is_devtools
     )
