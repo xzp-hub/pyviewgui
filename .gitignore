@@ -1,1 +1,5 @@
 /target
+/.idea
+/.venv
+/.gitignore
+workspace.xml
