@@ -3,7 +3,7 @@ requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "pywebgui"
+name = "pywebviewgui"
 version = "1.0.0"
 description = "A Python library for creating desktop applications with web technologies"
 authors = [
@@ -42,3 +42,4 @@ exclude = [
     "pywebgui/_pywebgui.*.so",
     "pywebgui/_pywebgui.*.dylib",
 ]
+
