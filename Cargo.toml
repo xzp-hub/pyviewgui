@@ -15,7 +15,7 @@ bench = false
 doctest = false
 
 [dependencies]
-pyo3 = { version = "*", features = ["extension-module"] }
+pyo3 = { version = "*", features = ["abi3-py311", "extension-module"] }
 tao = "*"
 wry = { version = "*", features = ["protocol"] }
 image = "*"
@@ -25,7 +25,7 @@ default = ["pyo3_backend"]
 pyo3_backend = ["pyo3/extension-module"]
 
 [dev-dependencies]
-pyo3 = { version = "*", features = ["auto-initialize"] }
+pyo3 = { version = "*", features = ["abi3-py311", "auto-initialize"] }
 
 [env]
 PYO3_USE_ABI3_FORWARD_COMPATIBILITY = "1"

@@ -1,5 +1,7 @@
 use image::GenericImageView;
 use pyo3::prelude::*;
+use pyo3::types::PyModule;
+use pyo3::Bound;
 use std::fs::read_to_string;
 use tao::window::Icon;
 use tao::{
@@ -32,7 +34,7 @@ pub fn py_create_window(
     );
 }
 
-#[pymodule(gil_used = false)]
+#[pymodule]
 fn _pywebgui(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(py_create_window, m)?)?;
     Ok(())
