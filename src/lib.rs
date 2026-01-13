@@ -10,7 +10,24 @@ use tao::{
     window::WindowBuilder,
 };
 use wry::WebViewBuilder;
-use std::io::ErrorKind;
+
+fn set_app_user_model_id() {
+    use std::ffi::OsStr;
+    use std::os::windows::ffi::OsStrExt;
+    use windows::core::PCWSTR;
+    use windows::Win32::UI::Shell::SetCurrentProcessExplicitAppUserModelID;
+
+    let app_id = "pyviewgui.app";
+    let wide: Vec<u16> = OsStr::new(app_id)
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect();
+
+    match unsafe { SetCurrentProcessExplicitAppUserModelID(PCWSTR::from_raw(wide.as_ptr())) } {
+        Ok(()) => println!("Successfully set AUMID: {}", app_id),
+        Err(err) => eprintln!("Failed to set AUMID: {}, error: {:?}", app_id, err),
+    }
+}
 
 #[pyfunction]
 pub fn py_create_window(
@@ -23,6 +40,9 @@ pub fn py_create_window(
     win_is_resizable: bool,
     win_is_devtools: bool,
 ) {
+    #[cfg(target_os = "windows")]
+    set_app_user_model_id();
+
     create_window(
         win_title,
         win_width,
@@ -35,57 +55,20 @@ pub fn py_create_window(
     );
 }
 
-
 #[pymodule]
-#[pyo3(gil_used=false)]
+#[pyo3(gil_used = false)]
 fn _pyviewgui(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(py_create_window, m)?)?;
     Ok(())
 }
 
 fn load_icon_from_path(path: &str) -> Option<Icon> {
-    match image::open(path) {
-        Ok(img) => {
-            let (width, height) = img.dimensions();
-            let rgba = img.to_rgba8();
-            let raw_pixels: Vec<u8> = rgba.into_raw();
-            Some(Icon::from_rgba(raw_pixels, width, height).unwrap())
-        }
-        Err(e) => {
-            eprintln!("Warning: Failed to load icon from path {}: {:?}", path, e);
-            // 如果无法从文件加载图标，尝试使用默认资源
-            load_default_icon()
-        }
-    }
-}
-
-// 添加一个默认图标加载函数作为备用方案
-fn load_default_icon() -> Option<Icon> {
-    // 尝试从资源目录加载默认图标
-    let default_icon_paths = [
-        "./static/default_icon.png",
-        "./statics/default_icon.png",
-        "pyviewgui/statics/default_icon.png",
-        "../pyviewgui/statics/default_icon.png",
-        "../../pyviewgui/statics/default_icon.png",
-    ];
-    
-    for path in &default_icon_paths {
-        if std::path::Path::new(path).exists() {
-            match image::open(path) {
-                Ok(img) => {
-                    let (width, height) = img.dimensions();
-                    let rgba = img.to_rgba8();
-                    let raw_pixels: Vec<u8> = rgba.into_raw();
-                    return Some(Icon::from_rgba(raw_pixels, width, height).unwrap());
-                }
-                Err(_) => continue,
-            }
-        }
-    }
-    
-    eprintln!("Warning: Could not load any default icon");
-    None
+    image::open(path).ok().and_then(|img| {
+        let (width, height) = img.dimensions();
+        let rgba = img.to_rgba8();
+        let raw_pixels = rgba.into_raw();
+        Icon::from_rgba(raw_pixels, width, height).ok()
+    })
 }
 
 pub fn create_window(
@@ -106,34 +89,32 @@ pub fn create_window(
         .with_decorations(win_is_decorations)
         .with_resizable(win_is_resizable)
         .with_window_icon(load_icon_from_path(&win_icon_path))
-        .build(&event_loop);
+        .build(&event_loop)
+        .unwrap();
 
-    match window {
-        Ok(window) => {
-            match if win_content.starts_with("http") {
-                WebViewBuilder::new()
-                    .with_url(win_content)
-                    .with_devtools(win_is_devtools)
-                    .build(&window)
-            } else {
-                WebViewBuilder::new()
-                    .with_html(read_to_string(win_content).expect("Failed to read html file"))
-                    .with_devtools(win_is_devtools)
-                    .build(&window)
-            } {
-                Ok(_) => event_loop.run(move |event, _, control_flow| {
-                    *control_flow = ControlFlow::Wait;
-                    match event {
-                        Event::WindowEvent {
-                            event: WindowEvent::CloseRequested,
-                            ..
-                        } => *control_flow = ControlFlow::Exit,
-                        _ => {}
-                    }
-                }),
-                Err(err) => panic!("Failed to create webview: {}", err),
-            }
+    match if win_content.starts_with("http") {
+        WebViewBuilder::new()
+            .with_url(win_content)
+            .with_devtools(win_is_devtools)
+            .build(&window)
+    } else {
+        WebViewBuilder::new()
+            .with_html(read_to_string(win_content).expect("Failed to read html file"))
+            .with_devtools(win_is_devtools)
+            .build(&window)
+    } {
+        Ok(_) => {
+            event_loop.run(move |event, _, control_flow| {
+                *control_flow = ControlFlow::Wait;
+                match event {
+                    Event::WindowEvent {
+                        event: WindowEvent::CloseRequested,
+                        ..
+                    } => *control_flow = ControlFlow::Exit,
+                    _ => {}
+                }
+            });
         }
-        Err(err) => panic!("Failed to create window: {}", err),
+        Err(err) => panic!("{}", err),
     }
 }
