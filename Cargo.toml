@@ -1,6 +1,6 @@
 [package]
 name = "pyviewgui"
-version = "0.1.0"
+version = "1.0.2"
 edition = "2021"
 
 [lib]
@@ -9,7 +9,7 @@ path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "*", features = ["abi3-py311", "extension-module"] }
+pyo3 = { version = "*", features = ["abi3-py311", "extension-module", "multiple-pymethods"] }
 tao = "*"
 wry = { version = "*", features = ["protocol"] }
 image = "*"

@@ -42,7 +42,6 @@ pub fn py_create_window(
 ) {
     #[cfg(target_os = "windows")]
     set_app_user_model_id();
-
     create_window(
         win_title,
         win_width,
