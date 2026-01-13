@@ -11,6 +11,7 @@ use tao::{
 };
 use wry::WebViewBuilder;
 
+#[cfg(target_os = "windows")]
 fn set_app_user_model_id() {
     use std::ffi::OsStr;
     use std::os::windows::ffi::OsStrExt;
@@ -27,6 +28,12 @@ fn set_app_user_model_id() {
         Ok(()) => println!("Successfully set AUMID: {}", app_id),
         Err(err) => eprintln!("Failed to set AUMID: {}, error: {:?}", app_id, err),
     }
+}
+
+#[cfg(not(target_os = "windows"))]
+fn set_app_user_model_id() {
+    // On non-Windows platforms, this function does nothing
+    println!("Setting App User Model ID is only supported on Windows");
 }
 
 #[pyfunction]
