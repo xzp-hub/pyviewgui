@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-pyviewgui 是一个使用 Rust 编写的 Python 库，用于创建基于 Web 技术的桌面应用程序。它利用 Rust 的高性能和安全性，结合 Web 技术的灵活性，为开发者提供一个简单易用的桌面 GUI 开发方案。
+pyviewgui 是一个使用 Rust 编写的 Python 库，用于创建基于 Web 技术的桌面应用程序。它利用 Rust 的高性能和安全性，结合 Web 技术的灵活性，为开发者提供一个简单易用的完全开源免费的桌面 GUI 开发方案。
 
 ### 核心特性
 
@@ -43,9 +43,7 @@ pyviewgui/
 
 ### 环境要求
 
-- Python 3.11 或更高版本
-- Rust 工具链
-- Cargo
+- Python 3.11 或更高版本（同时支持3.13.0及以上 free-threading 版本 Python）
 
 ### 安装方法
 
@@ -169,33 +167,12 @@ Python 部分提供高级接口：
 - **接口封装**: 封装 Rust 函数为 Python 函数
 - **模块导出**: 导出公共 API
 
-## GIL 管理
-
-### 问题背景
-
-在 Python 自由线程（free-threaded）版本中，GIL（全局解释器锁）默认是禁用的。然而，PyO3 扩展需要 GIL 来确保线程安全。
-
-### 解决方案
-
-pyviewgui 通过以下方式处理 GIL：
-
-1. 在模块初始化时正确声明 GIL 依赖
-2. 确保所有 Python API 调用都在持有 GIL 的情况下执行
-3. 在事件循环中正确管理 GIL 状态
-
-当在自由线程 Python 版本中运行时，可能会看到以下警告：
-```
-RuntimeWarning: The global interpreter lock (GIL) has been enabled to load module 'pyviewgui._pyviewgui', which has not declared that it can run safely without the GIL.
-```
-
-这是正常行为，表示 GIL 已被启用以确保线程安全。
-
 ## 构建与开发
 
 ### 构建依赖
 
 - `maturin`: 用于构建 Python 扩展
-- `cargo`: Rust 包管理器
+- `cargo`: Rust 包管理器（rust版本1.92.0及以上））
 
 ### 构建命令
 
@@ -204,7 +181,7 @@ RuntimeWarning: The global interpreter lock (GIL) has been enabled to load modul
 maturin develop
 
 # 构建发布版本
-maturin build --release
+maturin build --release（如若需要3.15 free-threading Python版本，请自行在3.15 free-threading Python版本下构建）
 
 # 构建 Python 包
 maturin build
@@ -228,37 +205,6 @@ maturin build
 ```bash
 python test/test.py
 ```
-
-## 常见问题
-
-### 1. 窗口无法显示
-
-**可能原因**: 
-- HTML 文件路径错误
-- 图标文件不存在
-
-**解决方案**:
-- 检查文件路径是否正确
-- 确保资源文件存在
-
-### 2. GIL 相关错误
-
-**可能原因**:
-- 在自由线程 Python 版本中运行
-
-**解决方案**:
-- 警告是正常行为，不影响功能
-- 如果需要禁用 GIL，可以设置 `PYTHON_GIL=0`
-
-### 3. 构建失败
-
-**可能原因**:
-- 缺少 Rust 工具链
-- 依赖包版本冲突
-
-**解决方案**:
-- 安装 Rust: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
-- 更新依赖: `pip install --upgrade maturin`
 
 ## 许可证
 
