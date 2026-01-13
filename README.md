@@ -99,10 +99,6 @@ maturin build --release
 ### 安装开发版本
 
 ```bash
-# 安装开发版本
-maturin develop
-
-# 或者直接安装
 pip install -e .
 ```
 

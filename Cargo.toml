@@ -7,12 +7,6 @@ edition = "2021"
 name = "pyviewgui"
 path = "src/lib.rs"
 crate-type = ["cdylib"]
-doc = false
-proc-macro = false
-harness = false
-plugin = false
-bench = false
-doctest = false
 
 [dependencies]
 pyo3 = { version = "*", features = ["abi3-py311", "extension-module"] }
@@ -27,5 +21,5 @@ pyo3_backend = ["pyo3/extension-module"]
 [dev-dependencies]
 pyo3 = { version = "*", features = ["abi3-py311", "auto-initialize"] }
 
-[env]
-PYO3_USE_ABI3_FORWARD_COMPATIBILITY = "1"
+# [env]
+# PYO3_USE_ABI3_FORWARD_COMPATIBILITY = "1"

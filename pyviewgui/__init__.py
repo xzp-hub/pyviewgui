@@ -1,7 +1,7 @@
 from ._pyviewgui import py_create_window
 from os.path import dirname, join
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 __author__ = "xzp"
 __description__ = "A Python library for creating desktop applications with web technologies"
 

@@ -10,6 +10,7 @@ use tao::{
     window::WindowBuilder,
 };
 use wry::WebViewBuilder;
+use std::io::ErrorKind;
 
 #[pyfunction]
 pub fn py_create_window(
@@ -50,8 +51,41 @@ fn load_icon_from_path(path: &str) -> Option<Icon> {
             let raw_pixels: Vec<u8> = rgba.into_raw();
             Some(Icon::from_rgba(raw_pixels, width, height).unwrap())
         }
-        Err(_) => None,
+        Err(e) => {
+            eprintln!("Warning: Failed to load icon from path {}: {:?}", path, e);
+            // 如果无法从文件加载图标，尝试使用默认资源
+            load_default_icon()
+        }
     }
+}
+
+// 添加一个默认图标加载函数作为备用方案
+fn load_default_icon() -> Option<Icon> {
+    // 尝试从资源目录加载默认图标
+    let default_icon_paths = [
+        "./static/default_icon.png",
+        "./statics/default_icon.png",
+        "pyviewgui/statics/default_icon.png",
+        "../pyviewgui/statics/default_icon.png",
+        "../../pyviewgui/statics/default_icon.png",
+    ];
+    
+    for path in &default_icon_paths {
+        if std::path::Path::new(path).exists() {
+            match image::open(path) {
+                Ok(img) => {
+                    let (width, height) = img.dimensions();
+                    let rgba = img.to_rgba8();
+                    let raw_pixels: Vec<u8> = rgba.into_raw();
+                    return Some(Icon::from_rgba(raw_pixels, width, height).unwrap());
+                }
+                Err(_) => continue,
+            }
+        }
+    }
+    
+    eprintln!("Warning: Could not load any default icon");
+    None
 }
 
 pub fn create_window(
