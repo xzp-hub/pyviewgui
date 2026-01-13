@@ -1,8 +1,10 @@
-# pyviewgui
+# pyviewgui 项目详细文档
+
+## 项目概述
 
 pyviewgui 是一个使用 Rust 编写的 Python 库，用于创建基于 Web 技术的桌面应用程序。它利用 Rust 的高性能和安全性，结合 Web 技术的灵活性，为开发者提供一个简单易用的桌面 GUI 开发方案。
 
-## 功能特性
+### 核心特性
 
 - 使用 Rust 编写，性能优异且内存安全
 - 通过 WebView 技术在桌面应用中嵌入 Web 内容
@@ -11,15 +13,98 @@ pyviewgui 是一个使用 Rust 编写的 Python 库，用于创建基于 Web 技
 - 支持自定义窗口图标
 - 可选择是否启用开发者工具
 
-## 安装
+## 技术架构
+
+### 技术栈
+
+- **Rust**: 核心逻辑和性能关键部分
+- **Python**: 提供高级接口
+- **PyO3**: Rust 和 Python 之间的绑定
+- **tao**: 跨平台窗口管理
+- **wry**: WebView 渲染引擎
+- **image**: 图标处理
+
+### 项目结构
+
+```
+pyviewgui/
+├── src/                    # Rust 源代码
+│   └── lib.rs             # 核心实现
+├── pyviewgui/             # Python 包
+│   └── __init__.py        # Python 接口
+├── static/                # 静态资源
+├── test/                  # 测试文件
+├── Cargo.toml             # Rust 依赖管理
+├── pyproject.toml         # Python 依赖管理
+└── README.md
+```
+
+## 安装与配置
+
+### 环境要求
+
+- Python 3.11 或更高版本
+- Rust 工具链
+- Cargo
+
+### 安装方法
 
 ```bash
 pip install pyviewgui
 ```
 
-## 使用方法
+或从源码安装：
 
-### 基本用法
+```bash
+git clone https://github.com/xzp-hub/pyviewgui.git
+cd pyviewgui
+pip install .
+```
+
+## API 参考
+
+### 主要函数
+
+#### `create_window`
+
+创建并显示一个桌面窗口。
+
+**函数签名:**
+```python
+def create_window(
+    win_title: str = "pyviewgui app",
+    win_width: int = 1200,
+    win_height: int = 800,
+    win_content: str = None,
+    win_icon_path: str = None,
+    win_is_decorations: bool = True,
+    win_is_resizable: bool = True,
+    win_is_devtools: bool = True
+)
+```
+
+**参数说明:**
+
+| 参数 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| win_title | str | "pyviewgui app" | 窗口标题 |
+| win_width | int | 1200 | 窗口宽度（像素） |
+| win_height | int | 800 | 窗口高度（像素） |
+| win_content | str | None | 窗口内容（HTML文件路径或URL） |
+| win_icon_path | str | None | 图标文件路径 |
+| win_is_decorations | bool | True | 是否显示窗口装饰（边框、标题栏等） |
+| win_is_resizable | bool | True | 窗口是否可调整大小 |
+| win_is_devtools | bool | True | 是否启用开发者工具 |
+
+**功能说明:**
+
+- 当 `win_content` 为 `None` 时，加载内置的默认 HTML 页面
+- 当 `win_icon_path` 为 `None` 时，使用内置的默认图标
+- 支持加载本地 HTML 文件或远程 URL
+
+### 使用示例
+
+#### 基本用法
 
 ```python
 import pyviewgui
@@ -28,7 +113,7 @@ import pyviewgui
 pyviewgui.create_window()
 ```
 
-### 自定义窗口
+#### 自定义窗口
 
 ```python
 import pyviewgui
@@ -44,7 +129,7 @@ pyviewgui.create_window(
 )
 ```
 
-### 加载自定义内容
+#### 加载自定义内容
 
 ```python
 import pyviewgui
@@ -59,49 +144,131 @@ pyviewgui.create_window(
 )
 ```
 
-## API 参考
+## 内部实现
 
-### `create_window()`
+### Rust 实现 (src/lib.rs)
 
-创建并显示一个桌面窗口。
+Rust 部分负责底层的窗口管理和 WebView 渲染：
 
-#### 参数
+- **窗口管理**: 使用 tao 库创建和管理窗口
+- **WebView 渲染**: 使用 wry 库嵌入 Web 内容
+- **图标处理**: 使用 image 库加载和处理图标
+- **跨平台支持**: 包含 Windows 特定的 App User Model ID 设置
 
-- `win_title` (str): 窗口标题，默认为 "pyviewgui app"
-- `win_width` (int): 窗口宽度，默认为 1200 像素
-- `win_height` (int): 窗口高度，默认为 800 像素
-- `win_content` (str): 窗口内容，可以是本地 HTML 文件路径或 URL，默认使用内置 HTML
-- `win_icon_path` (str): 窗口图标路径，默认使用内置图标
-- `win_decorations` (bool): 是否显示窗口装饰（边框、标题栏等），默认为 True
-- `win_resizable` (bool): 窗口是否可调整大小，默认为 True
-- `win_devtools` (bool): 是否启用开发者工具，默认为 True
+#### 核心函数
 
-## 技术栈
+- `py_create_window`: Python 函数的 Rust 实现
+- `create_window`: 创建和运行窗口事件循环
+- `load_icon_from_path`: 从路径加载图标
 
-- **Rust**: 核心逻辑和性能关键部分
-- **PyO3**: Rust 与 Python 之间的绑定
-- **tao**: 跨平台窗口管理
-- **wry**: WebView 渲染引擎
-- **maturin**: 构建和发布 Python 包
+### Python 实现 (pyviewgui/__init__.py)
 
-## 开发
+Python 部分提供高级接口：
 
-### 构建
+- **参数处理**: 处理默认值和路径
+- **接口封装**: 封装 Rust 函数为 Python 函数
+- **模块导出**: 导出公共 API
+
+## GIL 管理
+
+### 问题背景
+
+在 Python 自由线程（free-threaded）版本中，GIL（全局解释器锁）默认是禁用的。然而，PyO3 扩展需要 GIL 来确保线程安全。
+
+### 解决方案
+
+pyviewgui 通过以下方式处理 GIL：
+
+1. 在模块初始化时正确声明 GIL 依赖
+2. 确保所有 Python API 调用都在持有 GIL 的情况下执行
+3. 在事件循环中正确管理 GIL 状态
+
+当在自由线程 Python 版本中运行时，可能会看到以下警告：
+```
+RuntimeWarning: The global interpreter lock (GIL) has been enabled to load module 'pyviewgui._pyviewgui', which has not declared that it can run safely without the GIL.
+```
+
+这是正常行为，表示 GIL 已被启用以确保线程安全。
+
+## 构建与开发
+
+### 构建依赖
+
+- `maturin`: 用于构建 Python 扩展
+- `cargo`: Rust 包管理器
+
+### 构建命令
 
 ```bash
-# 构建 Python 包
-maturin build
+# 开发模式安装
+maturin develop
 
 # 构建发布版本
 maturin build --release
+
+# 构建 Python 包
+maturin build
 ```
 
-### 安装开发版本
+### 开发流程
+
+1. 修改 Rust 代码
+2. 运行 `maturin develop` 重新编译
+3. 测试 Python 接口
+
+## 测试
+
+### 测试文件
+
+- `test/test.py`: 基本功能测试
+- `test/check_gil_status.py`: GIL 状态检查
+
+### 运行测试
 
 ```bash
-pip install -e .
+python test/test.py
 ```
+
+## 常见问题
+
+### 1. 窗口无法显示
+
+**可能原因**: 
+- HTML 文件路径错误
+- 图标文件不存在
+
+**解决方案**:
+- 检查文件路径是否正确
+- 确保资源文件存在
+
+### 2. GIL 相关错误
+
+**可能原因**:
+- 在自由线程 Python 版本中运行
+
+**解决方案**:
+- 警告是正常行为，不影响功能
+- 如果需要禁用 GIL，可以设置 `PYTHON_GIL=0`
+
+### 3. 构建失败
+
+**可能原因**:
+- 缺少 Rust 工具链
+- 依赖包版本冲突
+
+**解决方案**:
+- 安装 Rust: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+- 更新依赖: `pip install --upgrade maturin`
 
 ## 许可证
 
 MIT License
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request 来改进项目。
+
+## 作者
+
+- **作者**: xzp
+- **邮箱**: x-z-p@foxmail.com
